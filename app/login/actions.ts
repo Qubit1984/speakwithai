@@ -5,7 +5,7 @@ import { ResultCode } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-
+import { toast } from "react-hot-toast";
 export const signIn = async (formData: FormData) => {
   "use server";
 
@@ -19,9 +19,11 @@ export const signIn = async (formData: FormData) => {
   });
 
   if (error) {
-    redirect("/error");
+    return error.message;
+    //redirect("/error");
   }
-
+  return { message: "You have successfully logged in" };
+  toast.success("You have successfully logged in");
   revalidatePath("/", "layout");
   redirect("/");
 };
