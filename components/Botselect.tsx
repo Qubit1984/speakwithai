@@ -43,10 +43,6 @@ export default function Botselect({
   const setSelectedName = useStore((state) => state.setSelectedName);
   const deleteAistate = useStore((state) => state.deleteAistate);
 
-  //console.log(aiparas);
-  //  console.log("selectedAiId", selectedAiId);
-
-  //console.log("selectedid", selectedid);
   const userId = aiparas[0]?.user_id;
   const GenerateDropdownMenuSub = (aiparas: AiPara[]) => {
     const handleSelectBot = async (

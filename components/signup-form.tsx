@@ -75,7 +75,7 @@ export default function SignupForm() {
           //pendingText="Signing Up..."
           aria-disabled={pending}
         >
-          {pending ? <IconSpinner /> : "Create account"}
+          Create account
         </SubmitButton>
       </div>
 
