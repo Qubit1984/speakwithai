@@ -1,23 +1,10 @@
 "use server";
 
-//import { signIn } from '@/auth'
-import { AuthError } from "next-auth";
-import { z } from "zod";
 import { ResultCode } from "@/lib/utils";
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-
-/* export async function getUser(email: string) {
-  const user = await kv.hgetall<User>(`user:${email}`)
-  return user
-}
-
-interface Result {
-  type: string
-  resultCode: ResultCode
-} */
 
 export const signIn = async (formData: FormData) => {
   "use server";
