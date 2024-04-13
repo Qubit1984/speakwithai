@@ -17,7 +17,7 @@ import { Trash2, CircleCheckBig } from "lucide-react";
 import { IconSliders } from "./ui/icons";
 import { cn } from "../lib/utils";
 import { AiPara } from "lib/types";
-import { updateSelectedAi, deleteAiPara } from "../app/actions";
+import { updateSelectedAi, deleteAiPara } from "@/app/actions";
 import EditBotMenu from "./Editbotmenu";
 import { redirect } from "next/navigation";
 import Botadd from "./Botadd";
@@ -48,7 +48,7 @@ export default function Botselect({
 
   //console.log("selectedid", selectedid);
   const userId = aiparas[0]?.user_id;
-  const generateDropdownMenuSub = (aiparas: AiPara[]) => {
+  const GenerateDropdownMenuSub = (aiparas: AiPara[]) => {
     const handleSelectBot = async (
       userId: string,
       botId: string,
@@ -94,7 +94,7 @@ export default function Botselect({
               }
             >
               {aiPara.id === selectedid ? (
-                <CircleCheckBig className="mr-2 h-4 w-4" />
+                <CircleCheckBig className="mr-2 size-4" />
               ) : null}
               <p>Select Bot</p>
             </DropdownMenuItem>
@@ -143,7 +143,7 @@ export default function Botselect({
         <DropdownMenuContent className="w-56 ">
           <DropdownMenuLabel>Your AI Bots</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {generateDropdownMenuSub(aiparas)}
+          {GenerateDropdownMenuSub(aiparas)}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="h-12"

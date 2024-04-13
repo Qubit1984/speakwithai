@@ -102,7 +102,7 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
         <DialogHeader>
           <DialogTitle>Edit Bot</DialogTitle>
           <DialogDescription>
-            Make changes to your Bot here. Click save when you're done.
+            Make changes to your Bot here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -167,7 +167,7 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
               name="speak_language"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>AI's language</FormLabel>
+                  <FormLabel>AI&apos;s language</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -209,7 +209,7 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
               name="should_speak"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>AI's Voice</FormLabel>
+                  <FormLabel>AI&apos;s Voice</FormLabel>
                   <FormControl>
                     <Switch
                       checked={field.value}
