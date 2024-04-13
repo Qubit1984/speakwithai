@@ -14,8 +14,10 @@ type AiPara = {
 
 type State = {
   aiparas: AiPara[];
-  selectedid: string;
+  selectedai: AiPara;
+  /*   selectedid: string;
   selectedname: string;
+  selectedlisten: string; */
 };
 type Actions = {
   addAistate: (AiPara: AiPara) => void;
@@ -26,14 +28,28 @@ type Actions = {
     property: keyof AiPara,
   ) => AiPara[keyof AiPara] | undefined;
   setInitialAistate: (initialAiParas: AiPara[]) => void;
+  setSelectedai: (AiPara: Partial<AiPara>) => void;
   setSelectedid: (id: string) => void;
   setSelectedName: (id: string) => void;
+  setSelectedListen: (id: string) => void;
 };
 
 const useStore = create<State & Actions>((set) => ({
   aiparas: [],
-  selectedid: "",
+  selectedai: {
+    id: "a",
+    user_id: "",
+    name: "default bot",
+    prompt: "",
+    temperature: 0,
+    max_token: 9999,
+    listen_language: "zh-CN",
+    speak_language: "Zhiyu",
+    should_speak: true,
+  },
+  /*  selectedid: "",
   selectedname: "",
+  selectedlisten: "zh-CN", */
   addAistate: (AiPara) => {
     set((state) => ({ aiparas: [...state.aiparas, AiPara] }));
   },
@@ -58,11 +74,19 @@ const useStore = create<State & Actions>((set) => ({
   setInitialAistate: (initialAiParas) => {
     set((state) => ({ aiparas: initialAiParas }));
   },
+  setSelectedai: (aiPartial) => {
+    set((state) => ({ selectedai: { ...state.selectedai, ...aiPartial } }));
+  },
   setSelectedid: (id) => {
-    set((state) => ({ selectedid: id }));
+    set((state) => ({
+      selectedai: { ...state.selectedai, id },
+    }));
   },
   setSelectedName: (name) => {
-    set((state) => ({ selectedname: name }));
+    set((state) => ({ selectedai: { ...state.selectedai, name } }));
+  },
+  setSelectedListen: (listen_language) => {
+    set((state) => ({ selectedai: { ...state.selectedai, listen_language } }));
   },
 }));
 export default useStore;

@@ -31,6 +31,7 @@ import {
   fetchInitialAiPara,
   getSelectedAiId,
   getAiProperty,
+  getSelectedAiPara,
 } from "@/app/actions";
 import { defaultAiParas } from "@/components/context/default";
 
@@ -76,10 +77,16 @@ export async function Header() {
 
   const AiParas = user ? await fetchInitialAiPara(user.id) : defaultAiParas;
   const selectedAiId = user ? await getSelectedAiId(user.id) : null;
+  const selectaiPara = selectedAiId
+    ? await getSelectedAiPara(selectedAiId)
+    : null;
+
   const selectedAiName = selectedAiId
     ? await getAiProperty(selectedAiId, "name")
     : "Default bot";
-  // console.log(selectedAiId);
+  const selectedAiListen = selectedAiId
+    ? await getAiProperty(selectedAiId, "listen_language")
+    : "zh-CN";
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 border-b shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
       <div className="flex items-center">
@@ -99,8 +106,9 @@ export async function Header() {
         </a> */}
         <Botselect
           AiParas={AiParas}
-          selectedAiId={selectedAiId}
-          selectedAiName={selectedAiName}
+          //  selectedAiId={selectedAiId}
+          selectedAiPara={selectaiPara}
+          // selectedAilisten={selectedAiListen}
         />
       </div>
     </header>

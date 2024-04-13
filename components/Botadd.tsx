@@ -160,8 +160,13 @@ export default function Botadd({ userId }: BotaddParams) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="ja">Japanese</SelectItem>
+                      <SelectItem value="zh-CN">Chinese</SelectItem>
                       <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="ja">Japanese</SelectItem>
+                      <SelectItem value="ko">Korean</SelectItem>
+                      <SelectItem value="de">German</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                      <SelectItem value="fr">French</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -184,8 +189,16 @@ export default function Botadd({ userId }: BotaddParams) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Takumi">Japanese</SelectItem>
                       <SelectItem value="Kevin">English</SelectItem>
+                      <SelectItem value="Zhiyu">Chinese</SelectItem>
+                      <SelectItem value="Takumi">Japanese</SelectItem>
+                      <SelectItem value="Seoyeon">Korean</SelectItem>
+                      <SelectItem value="Lupe">Spanish</SelectItem>
+                      <SelectItem value="Daniel">German</SelectItem>
+                      <SelectItem value="Léa">French</SelectItem>
+                      <SelectItem value="Zayd">Arabic</SelectItem>
+                      <SelectItem value="Hiujin">Cantonese</SelectItem>
+                      <SelectItem value="Tokomo">Japanese-2</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

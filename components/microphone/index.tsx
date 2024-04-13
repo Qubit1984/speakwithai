@@ -10,11 +10,12 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useQueue } from "@uidotdev/usehooks";
 import { IconMicrophone } from "../ui/icons";
 import { Button } from "@/components/ui/button";
-
+import useStore from "../context";
 interface MicrophoneProps {
   onVoiceChange: (voice: string) => void;
 }
 export default function Microphone({ onVoiceChange }: MicrophoneProps) {
+  const selectedai = useStore((state) => state.selectedai);
   const { add, remove, first, size, queue } = useQueue<any>([]);
   const [apiKey, setApiKey] = useState<CreateProjectKeyResponse | null>();
   const [connection, setConnection] = useState<LiveClient | null>();
@@ -26,9 +27,16 @@ export default function Microphone({ onVoiceChange }: MicrophoneProps) {
   const [microphone, setMicrophone] = useState<MediaRecorder | null>();
   const [userMedia, setUserMedia] = useState<MediaStream | null>();
   //const [caption, setCaption] = useState<string | null>();
-
+  const [model, setModel] = useState<string>("nova-2");
   const textRef = useRef<string[]>([]);
 
+  useEffect(() => {
+    if (selectedai.listen_language == "zh-CN") {
+      setModel("base");
+    } else {
+      setModel("nova-2");
+    }
+  }, [selectedai.listen_language]);
   const toggleMicrophone = useCallback(async () => {
     if (connection) {
       connection.finish();
@@ -61,12 +69,14 @@ export default function Microphone({ onVoiceChange }: MicrophoneProps) {
         setUserMedia(userMedia);
         setMicrophone(microphone);
       }
-      if (apiKey && "key" in apiKey) {
+      if (apiKey && selectedai && "key" in apiKey) {
         console.log("connecting on");
+        console.log("model", model);
+        console.log("selectedlisten", selectedai.listen_language);
         const deepgram = createClient(apiKey?.key ?? "");
         const connection = deepgram.listen.live({
-          model: "nova-2",
-          //language: "ja",
+          model: model,
+          language: selectedai.listen_language,
           utterance_end_ms: 1000,
           interim_results: true,
           smart_format: true,

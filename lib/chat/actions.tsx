@@ -111,13 +111,7 @@ async function submitUserMessage(content: string, selectedIndex: number) {
     text: ({ content, done, delta }) => {
       if (!textStream) {
         textStream = createStreamableValue("");
-        textNode = (
-          <BotMessage
-            content={textStream.value}
-            speak_language={AiPara.speak_language}
-            should_speak={AiPara.should_speak}
-          />
-        );
+        textNode = <BotMessage content={textStream.value} />;
       }
 
       if (done) {
@@ -430,11 +424,7 @@ export async function getUIStateFromAIState(aiState: Chat) {
         message.role === "user" ? (
           <UserMessage>{message.content}</UserMessage>
         ) : (
-          <BotMessage
-            content={message.content}
-            speak_language={AiPara.speak_language}
-            should_speak={AiPara.should_speak}
-          />
+          <BotMessage content={message.content} />
         ),
     }));
 }

@@ -11,7 +11,7 @@ import { StreamableValue } from "ai/rsc";
 import { useStreamableText } from "@/lib/hooks/use-streamable-text";
 //my code
 import speakMessage from "@/components/speak/speak-message";
-
+import useStore from "../context";
 // Different types of message bubbles.
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
@@ -30,17 +30,15 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
 export function BotMessage({
   content,
   className,
-  should_speak,
-  speak_language,
 }: {
   content: string | StreamableValue<string>;
   className?: string;
-  should_speak: boolean;
-  speak_language: string;
 }) {
+  const selectedai = useStore((state) => state.selectedai);
+
   const [text, isComplete] = useStreamableText(content) as [string, boolean];
-  if (isComplete && isComplete && should_speak) {
-    speakMessage(text, speak_language);
+  if (isComplete && isComplete && selectedai.should_speak) {
+    speakMessage(text, selectedai.speak_language);
   }
   return (
     <div className={cn("group relative flex items-start md:-ml-12", className)}>

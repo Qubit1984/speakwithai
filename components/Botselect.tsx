@@ -23,39 +23,31 @@ import { redirect } from "next/navigation";
 import Botadd from "./Botadd";
 import useStore from "./context";
 import { useEffect } from "react";
+import Link from "next/link";
+import { set } from "zod";
+
 interface BotselectProps {
   AiParas: AiPara[];
-  selectedAiId: string | null;
-  selectedAiName: string | undefined;
+  selectedAiPara: AiPara | null;
 }
 
-export default function Botselect({
-  AiParas,
-  selectedAiId,
-  selectedAiName,
-}: BotselectProps) {
+export default function Botselect({ AiParas, selectedAiPara }: BotselectProps) {
+  // const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const aiparas = useStore((state) => state.aiparas);
-  const selectedid = useStore((state) => state.selectedid);
-  const selectedname = useStore((state) => state.selectedname);
+  const selectedai = useStore((state) => state.selectedai);
+  //const selectedname = useStore((state) => state.selectedname);
   const setInitialAistate = useStore((state) => state.setInitialAistate);
-  const setSelectedid = useStore((state) => state.setSelectedid);
-  const setSelectedName = useStore((state) => state.setSelectedName);
+  const setSelectedai = useStore((state) => state.setSelectedai);
   const deleteAistate = useStore((state) => state.deleteAistate);
 
-  const userId = aiparas[0]?.user_id;
+  const userId = selectedai?.user_id;
   const GenerateDropdownMenuSub = (aiparas: AiPara[]) => {
-    const handleSelectBot = async (
-      userId: string,
-      botId: string,
-      name: string,
-    ) => {
+    const handleSelectBot = async (aiPara: AiPara) => {
       try {
-        await updateSelectedAi(userId, botId);
-        redirect("/new");
+        await updateSelectedAi(userId, aiPara.id);
       } catch (error) {}
-      setSelectedid(botId);
-      setSelectedName(name);
+      setSelectedai(aiPara);
     };
     const handleDelete = async (botId: string) => {
       try {
@@ -65,51 +57,56 @@ export default function Botselect({
     };
     useEffect(() => {
       setInitialAistate(AiParas);
-      if (selectedAiId) {
-        setSelectedid(selectedAiId);
+      if (selectedAiPara) {
+        setSelectedai(selectedAiPara);
       }
-      if (selectedAiName) {
-        setSelectedName(selectedAiName);
-      }
-      console.log("selectedname", selectedname);
     }, []);
     return aiparas.map((aiPara) => (
       <DropdownMenuSub key={aiPara.id}>
         <DropdownMenuSubTrigger className="h-12">
-          {aiPara.id === selectedid ? (
+          {aiPara.id === selectedai.id ? (
             <CircleCheckBig className="mr-2 h-4 w-4" />
           ) : null}
           <span>{aiPara.name}</span>
         </DropdownMenuSubTrigger>
         <DropdownMenuPortal>
-          <DropdownMenuSubContent>
-            <DropdownMenuItem
-              className="h-10 flex justify-center cursor-pointer"
-              onClick={() =>
-                handleSelectBot(aiPara.user_id, aiPara.id, aiPara.name)
-              }
-            >
-              {aiPara.id === selectedid ? (
-                <CircleCheckBig className="mr-2 size-4" />
-              ) : null}
-              <p>Select Bot</p>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="h-10 flex justify-center"
-              onSelect={(e) => e.preventDefault()}
-            >
-              <EditBotMenu aiPara={aiPara} />
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="h-10 flex justify-center cursor-pointer"
-              onClick={() => handleDelete(aiPara.id)}
-            >
-              <Trash2 className="text-red-600 mr-2 h-4 w-4" />
-              <span className="text-red-600">Delete Bot</span>
-            </DropdownMenuItem>
-          </DropdownMenuSubContent>
+          {userId ? (
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                className="h-10 flex justify-center cursor-pointer"
+                onClick={() => handleSelectBot(aiPara)}
+              >
+                {aiPara.id === selectedai.id ? (
+                  <CircleCheckBig className="mr-2 size-4" />
+                ) : null}
+                <Link href={"/"}>Select Bot</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="h-10 flex justify-center"
+                onSelect={(e) => e.preventDefault()}
+              >
+                <EditBotMenu aiPara={aiPara} />
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="h-10 flex justify-center cursor-pointer"
+                onClick={() => handleDelete(aiPara.id)}
+              >
+                <Trash2 className="text-red-600 mr-2 h-4 w-4" />
+                <span className="text-red-600">Delete Bot</span>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          ) : (
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                className="h-10 flex justify-center cursor-pointer
+             "
+              >
+                <Link href="/login">Please log in to Select Bot</Link>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          )}
         </DropdownMenuPortal>
       </DropdownMenuSub>
     ));
@@ -121,7 +118,7 @@ export default function Botselect({
         <div className="flex pl-3 shrink-0 select-none items-center   justify-center  bg-muted/50 text-sm font-medium uppercase text-muted-foreground">
           Selected bot :
         </div>
-        <div className="ml-2 hidden md:block">{selectedname}</div>
+        <div className="ml-2 hidden md:block">{selectedai.name}</div>
       </Button>
       <DropdownMenu onOpenChange={setDropdownOpen} open={dropdownOpen}>
         <DropdownMenuTrigger asChild>
@@ -145,7 +142,7 @@ export default function Botselect({
             className="h-12"
             onSelect={(e) => e.preventDefault()}
           >
-            <Botadd userId={userId} />
+            {userId ? <Botadd userId={userId} /> : null}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

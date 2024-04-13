@@ -42,6 +42,8 @@ export interface EditBotMenuProps {
 export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
   const [open, setOpen] = React.useState(false);
   const updateAistate = useStore((state) => state.updateAistate);
+  const setSelectedai = useStore((state) => state.setSelectedai);
+  const selectedai = useStore((state) => state.selectedai);
   const FormSchema = z.object({
     name: z.string().min(2, {
       message: "Username must be at least 2 characters.",
@@ -84,6 +86,15 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
 
     await updateAibot(aiPara.id, aipara);
     updateAistate(aiPara.id, aipara);
+    console.log("id compare", selectedai.id, aiPara.id);
+    if (selectedai.id === aiPara.id) {
+      setTimeout(() => {
+        setSelectedai(aipara);
+      }, 1000);
+
+      console.log(aipara);
+      console.log("selectedai", selectedai);
+    }
     setOpen(false);
   }
 
@@ -154,8 +165,13 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="ja">Japanese</SelectItem>
+                      <SelectItem value="zh-CN">Chinese</SelectItem>
                       <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="ja">Japanese</SelectItem>
+                      <SelectItem value="ko">Korean</SelectItem>
+                      <SelectItem value="de">German</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                      <SelectItem value="fr">French</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -178,8 +194,16 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Takumi">Japanese</SelectItem>
                       <SelectItem value="Kevin">English</SelectItem>
+                      <SelectItem value="Zhiyu">Chinese</SelectItem>
+                      <SelectItem value="Takumi">Japanese</SelectItem>
+                      <SelectItem value="Seoyeon">Korean</SelectItem>
+                      <SelectItem value="Lupe">Spanish</SelectItem>
+                      <SelectItem value="Daniel">German</SelectItem>
+                      <SelectItem value="Léa">French</SelectItem>
+                      <SelectItem value="Zayd">Arabic</SelectItem>
+                      <SelectItem value="Hiujin">Cantonese</SelectItem>
+                      <SelectItem value="Tokomo">Japanese-2</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
