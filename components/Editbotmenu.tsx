@@ -229,5 +229,4 @@ export default function EditBotMenu({ aiPara }: EditBotMenuProps) {
       </DialogContent>
     </Dialog>
   );
-  b;
 }
