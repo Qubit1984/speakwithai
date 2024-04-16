@@ -182,7 +182,7 @@ export async function getSelectedAiPara(userId: string): Promise<AiPara> {
     .single();
 
   if (botError) {
-    console.error("Error getting chat ID:", botError);
+    console.error("Error getting selected bot ID:", botError);
     return defaultAiParas[0];
   }
   const botId = botdata.bot_id;

@@ -27,7 +27,7 @@ export const defaultAiParas: AiPara[] = [
     id: "c",
     user_id: "default",
     name: "chatgpt",
-    prompt: "How old are you?",
+    prompt: "You are a helpful friend",
     temperature: 0,
     max_token: 4096,
     listen_language: "en",

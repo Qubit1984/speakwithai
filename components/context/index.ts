@@ -38,18 +38,16 @@ const useStore = create<State & Actions>((set) => ({
   aiparas: [],
   selectedai: {
     id: "a",
-    user_id: "",
-    name: "default bot",
-    prompt: "",
-    temperature: 0,
-    max_token: 9999,
-    listen_language: "zh-CN",
-    speak_language: "Zhiyu",
+    user_id: "default",
+    name: "日本語IT面试教师",
+    prompt:
+      "日本語の教師として、モキュメントのITミーティングにおいて、フロントエンドの基礎的な質問をすることがあります。話すときはできるだけ簡潔にしてください。",
+    temperature: 0.3,
+    max_token: 25,
+    listen_language: "ja",
+    speak_language: "Takumi",
     should_speak: true,
   },
-  /*  selectedid: "",
-  selectedname: "",
-  selectedlisten: "zh-CN", */
   addAistate: (AiPara) => {
     set((state) => ({ aiparas: [...state.aiparas, AiPara] }));
   },

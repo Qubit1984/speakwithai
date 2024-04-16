@@ -45,6 +45,8 @@ export default function Botselect({ AiParas, selectedAiPara }: BotselectProps) {
   const GenerateDropdownMenuSub = (aiparas: AiPara[]) => {
     const handleSelectBot = async (aiPara: AiPara) => {
       try {
+        console.log("aiPara.id", aiPara.id);
+        console.log(userId);
         await updateSelectedAi(userId, aiPara.id);
       } catch (error) {}
       setSelectedai(aiPara);
@@ -57,10 +59,12 @@ export default function Botselect({ AiParas, selectedAiPara }: BotselectProps) {
     };
     useEffect(() => {
       setInitialAistate(AiParas);
+    }, []);
+    useEffect(() => {
       if (selectedAiPara) {
         setSelectedai(selectedAiPara);
       }
-    }, []);
+    }, [selectedAiPara]);
     return aiparas.map((aiPara) => (
       <DropdownMenuSub key={aiPara.id}>
         <DropdownMenuSubTrigger className="h-12">
