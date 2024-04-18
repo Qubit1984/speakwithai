@@ -47,9 +47,10 @@ export function EmptyScreen() {
           .
         </p>
         <p className="leading-normal text-muted-foreground">
-          You can customize AI's prompt words, speaking language, and listening
-          language.Please register to use the customize features. By default,
-          the AI speaks in Japanese and listens to Japanese pronunciation.
+          You can customize AI&apos;s prompt words, speaking language, and
+          listening language.Please register to use the customize features. By
+          default, the AI speaks in Japanese and listens to Japanese
+          pronunciation.
         </p>
       </div>
     </div>
