@@ -54,7 +54,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   }
 
   if (chat?.userId !== user?.id) {
-    notFound();
+    redirect("/");
   }
 
   return (

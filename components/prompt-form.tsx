@@ -87,7 +87,7 @@ export function PromptForm({
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4"
+              className="absolute left-0  size-8 rounded-full bg-background p-0 sm:left-4"
               onClick={() => {
                 router.push("/new");
               }}
@@ -121,7 +121,7 @@ export function PromptForm({
             <TooltipContent>Send voice</TooltipContent>
           </Tooltip>
         </div>
-        <div className="absolute right-0 top-[13px] sm:right-4">
+        <div className=" right-0  sm:right-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button type="submit" size="icon" disabled={input === ""}>

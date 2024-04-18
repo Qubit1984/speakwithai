@@ -17,7 +17,7 @@ import {
 import { useLocalStorage } from "@/lib/hooks/use-local-storage";
 import { type Chat } from "@/lib/types";
 import { cn } from "@/lib/utils";
-
+import useStore from "./context";
 interface SidebarItemProps {
   index: number;
   chat: Chat;
@@ -30,9 +30,13 @@ export function SidebarItem({ index, chat, children }: SidebarItemProps) {
   const isActive = pathname === chat.path;
   const [newChatId, setNewChatId] = useLocalStorage("newChatId", null);
   const shouldAnimate = index === 0 && isActive && newChatId;
+  const setSelectedai = useStore((state) => state.setSelectedai);
   //console.log("sidebar item", chat);
   if (!chat?.id) return null;
 
+  /*   function handleClick() {
+    setSelectedai(chat.ai_paras);
+  } */
   return (
     <motion.div
       className="relative h-8"
@@ -70,6 +74,7 @@ export function SidebarItem({ index, chat, children }: SidebarItemProps) {
       </div>
       <Link
         href={chat.path}
+        // onClick={handleClick}
         className={cn(
           buttonVariants({ variant: "ghost" }),
           "group w-full px-8 transition-colors hover:bg-zinc-200/40 dark:hover:bg-zinc-300/10",

@@ -76,10 +76,8 @@ export async function Header() {
   } = await supabase.auth.getUser();
 
   const AiParas = user ? await fetchInitialAiPara(user.id) : defaultAiParas;
-  const selectedAiId = user ? await getSelectedAiId(user.id) : null;
-  const selectaiPara = selectedAiId
-    ? await getSelectedAiPara(selectedAiId)
-    : null;
+  /*   const selectedAiId = user ? await getSelectedAiId(user.id) : null; */
+  const selectaiPara = user ? await getSelectedAiPara(user.id) : null;
   /* 
   const selectedAiName = selectedAiId
     ? await getAiProperty(selectedAiId, "name")

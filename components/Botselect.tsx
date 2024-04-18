@@ -59,7 +59,7 @@ export default function Botselect({ AiParas, selectedAiPara }: BotselectProps) {
     };
     useEffect(() => {
       setInitialAistate(AiParas);
-    }, []);
+    }, [AiParas]);
     useEffect(() => {
       if (selectedAiPara) {
         setSelectedai(selectedAiPara);

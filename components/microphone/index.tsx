@@ -238,7 +238,7 @@ export default function Microphone({ onVoiceChange }: MicrophoneProps) {
           micOpen &&
           connection
             ? "fill-red-400 drop-shadow-glowRed"
-            : "fill-gray-600"
+            : "fill-gray-400"
         }
       />
       <span className="sr-only">Send message</span>

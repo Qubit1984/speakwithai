@@ -7,7 +7,25 @@ const polly: AWS.Polly = new AWS.Polly({
     secretAccessKey: process.env.NEXT_PUBLIC_POLLY_SECRET_KEY!,
   },
 });
+let audioQueue: Blob[] = [];
+let currentAudioElement: HTMLAudioElement | null = null;
+function playNextAudio() {
+  if (audioQueue.length > 0 && !currentAudioElement) {
+    const audioBlob = audioQueue.shift();
+    if (audioBlob) {
+      const blobUrl = URL.createObjectURL(audioBlob);
+      currentAudioElement = new Audio(blobUrl);
 
+      currentAudioElement.onended = () => {
+        currentAudioElement = null;
+        URL.revokeObjectURL(blobUrl);
+        playNextAudio();
+      };
+
+      currentAudioElement.play();
+    }
+  }
+}
 export default async function speakMessage(
   message: string,
   speakLanguage: string,
@@ -21,25 +39,23 @@ export default async function speakMessage(
         VoiceId: speakLanguage, // 替换为你喜欢的语音ID
       })
       .promise();
+
+    let arrayBuffer;
     if (response.AudioStream instanceof Buffer) {
-      const arrayBuffer = response.AudioStream.buffer;
-      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-      const blobUrl = URL.createObjectURL(blob);
-      const audioElement = new Audio(blobUrl);
-      audioElement.play(); // 在这里使用 arrayBuffer
+      arrayBuffer = response.AudioStream.buffer;
     } else if (
       typeof response.AudioStream === "string" ||
       response.AudioStream instanceof Uint8Array
     ) {
-      const arrayBuffer = Buffer.from(response.AudioStream).buffer;
-      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-      const blobUrl = URL.createObjectURL(blob);
-      const audioElement = new Audio(blobUrl);
-      audioElement.play(); // 在这里使用 arrayBuffer
+      arrayBuffer = Buffer.from(response.AudioStream).buffer;
     } else {
       console.error("Unsupported AudioStream type");
     }
-
+    if (arrayBuffer) {
+      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+      audioQueue.push(blob);
+      playNextAudio();
+    }
     // 播放音频
   } catch (error) {
     console.error("Error synthesizing speech:", error);
