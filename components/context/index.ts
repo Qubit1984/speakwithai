@@ -39,7 +39,7 @@ const useStore = create<State & Actions>((set) => ({
   selectedai: {
     id: "a",
     user_id: "default",
-    name: "日本語IT面试教师",
+    name: "default 日本語",
     prompt:
       "日本語の教師として、モキュメントのITミーティングにおいて、フロントエンドの基礎的な質問をすることがあります。話すときはできるだけ簡潔にしてください。",
     temperature: 0.3,

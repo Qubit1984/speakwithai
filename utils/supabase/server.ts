@@ -1,9 +1,9 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { cache } from "react";
+
 //import { Cookies } from "cookies-next";
 
-export const createClient = cache(() => {
+export const createClient = () => {
   const cookieStore = cookies();
   //const cookiesInstance = new Cookies(new URL("http://localhost"), cookieStore);
   return createServerClient(
@@ -35,4 +35,4 @@ export const createClient = cache(() => {
       },
     },
   );
-});
+};

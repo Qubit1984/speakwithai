@@ -42,7 +42,6 @@ export default async function ChatPage({ params }: ChatPageProps) {
     redirect(`/login?next=/chat/${params.id}`);
   }
 
-  const userId = user.id as string;
   const chat = await getChat(params.id);
   const aiParaId = chat.ai_para;
   const aiName = aiParaId

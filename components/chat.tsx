@@ -21,7 +21,7 @@ export interface ChatProps extends React.ComponentProps<"div"> {
   aiName: string | undefined;
   missingKeys: string[];
 }
-//const supabase = createClient();
+
 export function Chat({ id, aiName, user, missingKeys, className }: ChatProps) {
   const router = useRouter();
   const path = usePathname();

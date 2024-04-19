@@ -1,6 +1,6 @@
 "use server";
 import "server-only";
-//import { Database } from "@/lib/db_types";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
@@ -49,7 +49,17 @@ export async function getChat(id: string) {
   };
   return chat;
 }
+export async function getChatbybotid(id: string) {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("chats")
+    .select("id")
+    .eq("ai_para", id)
+    .maybeSingle();
+  const chatids = data?.id;
 
+  return chatids;
+}
 export async function removeChat({ id, path }: { id: string; path: string }) {
   const supabase = createClient();
   try {
