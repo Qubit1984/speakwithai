@@ -32,7 +32,7 @@ type AiPara = {
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "",
-  baseURL: "http://jp.japanesegrammar.tokyo:3040/v1",
+  baseURL: process.env.NEXT_OPENAI_URL,
 });
 async function getCurrentUserId() {
   const supabase = createClient();
